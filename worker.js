@@ -1,6 +1,6 @@
 // ====================== 可配置项 ======================
 // 缓存策略：速度优先
-const EDGE_CACHE_SECONDS = 31536000; // 1 年
+const EDGE_CACHE_SECONDS = 2592000;  // 30 天（1 个月）
 const SWR_SECONDS = 86400;           // 1 天（边缘可先旧后新，减少抖动）
 const BROWSER_CACHE_SECONDS = 3600;  // 浏览器缓存 1 小时（平衡新鲜度和性能）
 
@@ -78,7 +78,7 @@ function getCacheStrategy(pathname) {
         /\/tags?\//.test(pathname) ||
         /\/releases\/download\/v?\d+/.test(pathname)) {
         return {
-            edgeTTL: 31536000,    // 1 年
+            edgeTTL: 2592000,     // 30 天（1 个月）
             browserTTL: 86400,    // 1 天
             useETag: false,
             description: 'versioned'
