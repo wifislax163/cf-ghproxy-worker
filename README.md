@@ -10,6 +10,8 @@ A high-performance GitHub file acceleration proxy service based on Cloudflare Wo
 
 [English](#english) | [中文](#中文)
 
+Demo: https://github-proxy.asailor.org
+
 ---
 
 ## 中文
@@ -84,6 +86,15 @@ A high-performance GitHub file acceleration proxy service based on Cloudflare Wo
 5. **完成部署** ✅
    - 默认 URL：`https://your-worker.workers.dev`
    - 自定义域名：`https://gh.example.com`（如已配置）
+
+#### 方法三：自动部署（推荐用于持续维护）
+
+配置 GitHub Actions 实现代码 push 后自动部署，保持 Worker 与仓库同步。
+
+**⚠️ 注意**：一键部署只在首次点击时生效，后续 GitHub 代码更新不会自动同步到 Worker。如需持续维护，建议配置自动部署。
+
+**配置步骤**：查看 [自动部署配置指南](DEPLOYMENT.md#中文)
+
 
 ### 📖 使用指南
 
@@ -379,6 +390,15 @@ Click the button below to automatically deploy to Cloudflare Workers:
 5. **Deployment Complete** ✅
    - Default URL: `https://your-worker.workers.dev`
    - Custom domain: `https://gh.example.com` (if configured)
+
+#### Method 3: Auto-Deployment (Recommended for Ongoing Maintenance)
+
+Configure GitHub Actions to automatically deploy when code is pushed, keeping your Worker synchronized with the repository.
+
+**⚠️ Note**: One-click deploy only works when the button is clicked. GitHub code updates won't automatically sync to the Worker. For ongoing maintenance, auto-deployment is recommended.
+
+**Configuration Steps**: See [Auto-Deployment Configuration Guide](DEPLOYMENT.md#english)
+
 
 ### 📖 Usage Guide
 
