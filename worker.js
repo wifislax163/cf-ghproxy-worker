@@ -33,9 +33,10 @@ const FALLBACK_MIRRORS = [
  * 生成首页 HTML 内容
  * Generate homepage HTML content
  * 
+ * @param {string} domain - 当前访问域名（如 https://github-proxy.asailor.org）| Current domain (e.g., https://github-proxy.asailor.org)
  * @returns {string} HTML 页面内容 | HTML page content
  */
-function getHomePage() {
+function getHomePage(domain = 'https://your-worker.workers.dev') {
     return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -297,7 +298,7 @@ function getHomePage() {
                 </div>
                 <div class="format-desc lang-content active" data-lang="zh">直接在代理域名后面粘贴完整的 GitHub URL</div>
                 <div class="format-desc lang-content" data-lang="en">Paste the full GitHub URL directly after the proxy domain</div>
-                <div class="code-block">https://your-worker.workers.dev/https://github.com/user/repo/releases/download/v1.0/file.zip</div>
+                <div class="code-block">${domain}/https://github.com/user/repo/releases/download/v1.0/file.zip</div>
             </div>
             <div class="format-item">
                 <div class="format-title">
@@ -306,7 +307,7 @@ function getHomePage() {
                 </div>
                 <div class="format-desc lang-content active" data-lang="zh">去掉协议头（https://），从域名开始</div>
                 <div class="format-desc lang-content" data-lang="en">Remove the protocol (https://), start from the domain</div>
-                <div class="code-block">https://your-worker.workers.dev/github.com/user/repo/releases/download/v1.0/file.zip</div>
+                <div class="code-block">${domain}/github.com/user/repo/releases/download/v1.0/file.zip</div>
             </div>
             <div class="format-item">
                 <div class="format-title">
@@ -315,7 +316,7 @@ function getHomePage() {
                 </div>
                 <div class="format-desc lang-content active" data-lang="zh">只保留用户名/仓库名/路径，最简洁的形式</div>
                 <div class="format-desc lang-content" data-lang="en">Keep only username/repo/path, the most concise format</div>
-                <div class="code-block">https://your-worker.workers.dev/user/repo/releases/download/v1.0/file.zip</div>
+                <div class="code-block">${domain}/user/repo/releases/download/v1.0/file.zip</div>
             </div>
             <h3 class="lang-content active" data-lang="zh">支持的域名</h3>
             <h3 class="lang-content" data-lang="en">Supported Domains</h3>
@@ -676,7 +677,8 @@ export default {
         const githubInfo = parseGitHubPath(url.pathname);
         if (!githubInfo) {
             // 显示首页 | Show homepage
-            return new Response(getHomePage(), {
+            const currentDomain = url.origin; // 获取当前访问域名
+            return new Response(getHomePage(currentDomain), {
                 status: 200,
                 headers: {
                     "Content-Type": "text/html; charset=utf-8",
