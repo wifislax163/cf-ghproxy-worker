@@ -25,6 +25,15 @@ Demo: https://github-proxy.asailor.org
 - 🔧 **可靠性优化** - 重试机制、超时控制、连接优化
 - 🎨 **精美首页** - 中英双语界面，支持三种 URL 格式说明
 
+### 🎨 界面特性
+
+- 🌓 **智能主题** - 自动跟随系统浅色/深色主题，支持手动切换
+- 🌍 **自动语言检测** - 根据浏览器语言自动选择中文/英文界面
+- 🔄 **实时主题同步** - 系统主题变化时自动切换，无需刷新
+- 📋 **域名自动替换** - 示例 URL 自动显示当前访问域名，即用即改
+- 🎯 **状态记忆** - 使用 sessionStorage 保存用户偏好，刷新后恢复系统设置
+
+
 ### 🎨 缓存策略
 
 系统根据文件路径自动选择最优缓存策略：
@@ -329,6 +338,15 @@ x-response-time: 45ms
 - 📦 **Complete Features** - Resumable downloads, CORS support, ETag validation
 - 🔧 **Reliability** - Retry mechanism, timeout control, connection optimization
 - 🎨 **Beautiful Homepage** - Bilingual interface with three URL format examples
+
+### 🎨 Interface Features
+
+- 🌓 **Smart Theme** - Auto-follows system light/dark theme with manual toggle
+- 🌍 **Auto Language Detection** - Automatically selects Chinese/English based on browser language
+- 🔄 **Real-time Theme Sync** - Auto-switches when system theme changes, no refresh needed
+- 📋 **Dynamic Domain Replacement** - Example URLs automatically show current accessing domain
+- 🎯 **Preference Memory** - Uses sessionStorage to save user preferences, resets to system on refresh
+
 
 ### 🎨 Caching Strategy
 
