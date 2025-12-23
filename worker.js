@@ -116,28 +116,61 @@ function getCacheStrategy(pathname) {
  * 解析请求路径并提取 GitHub 目标信息
  * Parse request pathname and extract GitHub target information
  * 
+ * 支持三种路径格式（优先级从高到低）：
+ * Supports three path formats (priority from high to low):
+ * 1. /https://github.com/user/repo/... （完整 URL）| (Full URL)
+ * 2. /github.com/user/repo/... （域名路径）| (Domain path)
+ * 3. /user/repo/... （简化路径，默认 github.com）| (Simplified path, defaults to github.com)
+ * 
  * @param {string} pathname - 请求路径 | Request pathname
  * @returns {Object|null} 包含 host、path 和 fullUrl 的对象，无效时返回 null
  *                        Object with host, path, and fullUrl, or null if invalid
  */
 function parseGitHubPath(pathname) {
-    // 支持的路径格式 | Supported path formats:
-    // 1. /github.com/user/repo/...
-    // 2. /raw.githubusercontent.com/user/repo/...
-    // 3. /user/repo/... （默认使用 github.com）| (defaults to github.com)
+    // 去除首尾的斜杠 | Remove leading/trailing slashes
+    const cleanPath = pathname.replace(/^\/+|\/+$/g, '');
 
-    const parts = pathname.split('/').filter(p => p);
-    if (parts.length === 0) {
+    if (!cleanPath) {
         return null;
     }
 
-    let githubHost = "github.com";
-    let githubPath = pathname;
+    // 方案 1：完整 URL 格式（/https://github.com/...）
+    // Format 1: Full URL format (/https://github.com/...)
+    if (cleanPath.startsWith('https://') || cleanPath.startsWith('http://')) {
+        try {
+            const targetUrl = new URL(cleanPath);
 
-    // 检查第一部分是否为 GitHub 域名 | Check if first part is a GitHub domain
+            // 验证是否为支持的 GitHub 域名 | Verify if it's a supported GitHub domain
+            if (GITHUB_HOSTS.includes(targetUrl.hostname)) {
+                return {
+                    host: targetUrl.hostname,
+                    path: targetUrl.pathname + targetUrl.search + targetUrl.hash,
+                    fullUrl: targetUrl.href
+                };
+            }
+
+            // 不支持的域名，返回错误 | Unsupported domain, return null
+            return null;
+        } catch (e) {
+            // URL 解析失败，继续尝试其他格式 | URL parsing failed, try other formats
+            // 这里不应该发生，但作为容错处理 | This shouldn't happen, but added for error handling
+        }
+    }
+
+    // 方案 2 和 3：域名路径或简化路径
+    // Format 2 & 3: Domain path or simplified path
+    const parts = cleanPath.split('/');
+    let githubHost = "github.com";
+    let githubPath = '';
+
+    // 检查第一部分是否为 GitHub 域名（方案 2）
+    // Check if first part is a GitHub domain (Format 2)
     if (GITHUB_HOSTS.includes(parts[0])) {
         githubHost = parts[0];
         githubPath = '/' + parts.slice(1).join('/');
+    } else {
+        // 方案 3：默认使用 github.com | Format 3: Default to github.com
+        githubPath = '/' + cleanPath;
     }
 
     return {
