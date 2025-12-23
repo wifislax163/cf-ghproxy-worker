@@ -52,7 +52,7 @@ A high-performance GitHub file acceleration proxy service based on Cloudflare Wo
 
 **前置要求：**
 - Cloudflare 账号（[免费注册](https://dash.cloudflare.com/sign-up)）
-- 无需其他配置
+- （建议）托管到 Cloudflare 的域名 - 用于绑定自定义域名，避免 `*.workers.dev` 域名被封锁的风险
 
 **部署步骤：**
 
@@ -347,7 +347,7 @@ Click the button below to automatically deploy to Cloudflare Workers:
 
 **Prerequisites:**
 - Cloudflare account ([Free Sign Up](https://dash.cloudflare.com/sign-up))
-- No other configuration needed
+- (Recommended) A domain hosted on Cloudflare - For binding custom domain to avoid `*.workers.dev` blocking risks
 
 **Deployment Steps:**
 
