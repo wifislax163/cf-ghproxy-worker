@@ -189,11 +189,11 @@ Replace the domain in GitHub URLs with your Worker domain:
 # Original URL
 https://github.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
-# Accelerated URL (using Workers domain)
-https://your-worker.workers.dev/torvalds/linux/archive/refs/tags/v6.6.tar.gz
+# Accelerated URL (domain path format)
+https://your-worker.workers.dev/github.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
-# Accelerated URL (using custom domain)
-https://gh.example.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
+# Or use full URL format (paste the complete URL after proxy domain)
+https://your-worker.workers.dev/https://github.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 ```
 
 <br/>
@@ -202,9 +202,10 @@ https://gh.example.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
 | Format | Description | Example |
 |:------:|:------------|:--------|
-| **Simplified** | Recommended, most common | `https://proxy.dev/user/repo/releases/download/v1.0/file.zip` |
-| **Full Format** | Explicit domain | `https://proxy.dev/github.com/user/repo/...` |
-| **Raw Format** | Get raw files | `https://proxy.dev/raw.githubusercontent.com/user/repo/main/file` |
+| **📦 Release Files** | Download from github.com | `proxy.dev/github.com/user/repo/releases/download/v1.0/file.zip` |
+| **📄 Raw Files** | Get raw files | `proxy.dev/raw.githubusercontent.com/user/repo/main/file` |
+| **📋 Gist Snippets** | Get gist content | `proxy.dev/gist.githubusercontent.com/user/gist-id/raw/file` |
+| **🔗 Full URL** | Paste full GitHub URL | `proxy.dev/https://github.com/user/repo/...` |
 
 <br/>
 
@@ -215,10 +216,10 @@ https://gh.example.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
 ```bash
 # Download Clash Meta core
-wget https://your-worker.workers.dev/MetaCubeX/mihomo/releases/download/v1.18.0/mihomo-linux-amd64
+wget https://your-worker.workers.dev/github.com/MetaCubeX/mihomo/releases/download/v1.18.0/mihomo-linux-amd64
 
 # Download Node.js source code
-curl -O https://your-worker.workers.dev/nodejs/node/archive/refs/tags/v20.10.0.tar.gz
+curl -O https://your-worker.workers.dev/github.com/nodejs/node/archive/refs/tags/v20.10.0.tar.gz
 ```
 
 </details>
@@ -251,7 +252,7 @@ download_file() {
     local tag=$2
     local filename=$3
     
-    wget "${GITHUB_PROXY}/${repo}/releases/download/${tag}/${filename}"
+    wget "${GITHUB_PROXY}/github.com/${repo}/releases/download/${tag}/${filename}"
 }
 
 # Usage example
@@ -265,11 +266,11 @@ download_file "cli/cli" "v2.40.0" "gh_2.40.0_linux_amd64.tar.gz"
 
 ```bash
 # Method 1: Use git config
-git config --global url."https://your-worker.workers.dev/".insteadOf "https://github.com/"
+git config --global url."https://your-worker.workers.dev/github.com/".insteadOf "https://github.com/"
 git clone https://github.com/torvalds/linux.git
 
 # Method 2: Direct URL replacement
-git clone https://your-worker.workers.dev/torvalds/linux.git
+git clone https://your-worker.workers.dev/github.com/torvalds/linux.git
 ```
 
 </details>

@@ -189,11 +189,11 @@
 # 原始 URL
 https://github.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
-# 加速 URL（使用 Workers 域名）
-https://your-worker.workers.dev/torvalds/linux/archive/refs/tags/v6.6.tar.gz
+# 加速 URL（域名路径格式）
+https://your-worker.workers.dev/github.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
-# 加速 URL（使用自定义域名）
-https://gh.example.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
+# 或使用完整 URL 格式（直接在代理域名后粘贴完整链接）
+https://your-worker.workers.dev/https://github.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 ```
 
 <br/>
@@ -202,9 +202,10 @@ https://gh.example.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
 | 格式 | 说明 | 示例 |
 |:----:|:-----|:-----|
-| **简洁格式** | 推荐，最常用 | `https://proxy.dev/user/repo/releases/download/v1.0/file.zip` |
-| **完整格式** | 显式指定域名 | `https://proxy.dev/github.com/user/repo/...` |
-| **Raw 格式** | 获取原始文件 | `https://proxy.dev/raw.githubusercontent.com/user/repo/main/file` |
+| **📦 Release 文件** | 下载 github.com 文件 | `proxy.dev/github.com/user/repo/releases/download/v1.0/file.zip` |
+| **📄 Raw 文件** | 获取原始文件 | `proxy.dev/raw.githubusercontent.com/user/repo/main/file` |
+| **📋 Gist 代码片段** | 获取 Gist 内容 | `proxy.dev/gist.githubusercontent.com/user/gist-id/raw/file` |
+| **🔗 完整 URL** | 直接粘贴完整 GitHub 链接 | `proxy.dev/https://github.com/user/repo/...` |
 
 <br/>
 
@@ -215,10 +216,10 @@ https://gh.example.com/torvalds/linux/archive/refs/tags/v6.6.tar.gz
 
 ```bash
 # 下载 Clash Meta 核心
-wget https://your-worker.workers.dev/MetaCubeX/mihomo/releases/download/v1.18.0/mihomo-linux-amd64
+wget https://your-worker.workers.dev/github.com/MetaCubeX/mihomo/releases/download/v1.18.0/mihomo-linux-amd64
 
 # 下载 Node.js 源码
-curl -O https://your-worker.workers.dev/nodejs/node/archive/refs/tags/v20.10.0.tar.gz
+curl -O https://your-worker.workers.dev/github.com/nodejs/node/archive/refs/tags/v20.10.0.tar.gz
 ```
 
 </details>
@@ -251,7 +252,7 @@ download_file() {
     local tag=$2
     local filename=$3
     
-    wget "${GITHUB_PROXY}/${repo}/releases/download/${tag}/${filename}"
+    wget "${GITHUB_PROXY}/github.com/${repo}/releases/download/${tag}/${filename}"
 }
 
 # 使用示例
@@ -265,11 +266,11 @@ download_file "cli/cli" "v2.40.0" "gh_2.40.0_linux_amd64.tar.gz"
 
 ```bash
 # 方法1: 使用 git config
-git config --global url."https://your-worker.workers.dev/".insteadOf "https://github.com/"
+git config --global url."https://your-worker.workers.dev/github.com/".insteadOf "https://github.com/"
 git clone https://github.com/torvalds/linux.git
 
 # 方法2: 直接替换 URL
-git clone https://your-worker.workers.dev/torvalds/linux.git
+git clone https://your-worker.workers.dev/github.com/torvalds/linux.git
 ```
 
 </details>
