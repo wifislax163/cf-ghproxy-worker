@@ -693,8 +693,12 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
                 if (url.startsWith('https://') || url.startsWith('http://')) {
                     const parsed = new URL(url);
                     if (SUPPORTED_HOSTS.includes(parsed.hostname)) {
-                        // 返回简化格式
-                        return PROXY_DOMAIN + parsed.pathname + parsed.search + parsed.hash;
+                        // 对于 github.com，使用简化格式（后端默认识别）
+                        if (parsed.hostname === 'github.com') {
+                            return PROXY_DOMAIN + parsed.pathname + parsed.search + parsed.hash;
+                        }
+                        // 对于其他域名（raw.githubusercontent.com 等），保留域名信息
+                        return PROXY_DOMAIN + '/' + parsed.hostname + parsed.pathname + parsed.search + parsed.hash;
                     }
                 }
                 return null;
