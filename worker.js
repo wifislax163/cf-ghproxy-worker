@@ -240,6 +240,150 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
         .lang-content { display: none; }
         .lang-content.active { display: block; }
         
+        /* 转换器卡片样式 */
+        .converter-card {
+            background: var(--accent-gradient);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .converter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+        .converter-card:hover {
+            transform: translateY(-4px);
+        }
+        .converter-card h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .url-input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        .url-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .url-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .action-btn {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+        .paste-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            white-space: nowrap;
+        }
+        .paste-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .result-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .result-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+        .result-url {
+            color: #a8dadc;
+            word-break: break-all;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .copy-btn {
+            flex: 1;
+            min-width: 100px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        .download-btn {
+            flex: 1;
+            min-width: 100px;
+            background: rgba(16, 185, 129, 0.8);
+            color: white;
+        }
+        .download-btn:hover {
+            background: rgba(16, 185, 129, 1);
+            transform: translateY(-2px);
+        }
+        .error-msg {
+            color: #fca5a5;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        .toast.error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+        }
+        
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             h1 { font-size: 2rem; }
@@ -254,6 +398,18 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
             .control-btn {
                 padding: 0.5rem 1rem;
                 font-size: 0.85rem;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+            .paste-btn {
+                width: 100%;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .copy-btn, .download-btn {
+                width: 100%;
             }
         }
     </style>
@@ -279,6 +435,64 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
                 <span class="lang-content" data-lang="en">GitHub Acceleration Proxy Service Based on Cloudflare Workers</span>
             </p>
         </header>
+        
+        <!-- 转换器卡片 -->
+        <div class="card converter-card">
+            <h2>
+                <span>⚡</span>
+                <span class="lang-content active" data-lang="zh">快速转换</span>
+                <span class="lang-content" data-lang="en">Quick Convert</span>
+            </h2>
+            
+            <!-- 输入区域 -->
+            <div class="input-group">
+                <input type="text" id="github-url" class="url-input" 
+                    placeholder="粘贴 GitHub 链接，例如：https://github.com/user/repo/..."
+                    data-placeholder-zh="粘贴 GitHub 链接，例如：https://github.com/user/repo/..."
+                    data-placeholder-en="Paste GitHub URL, e.g.: https://github.com/user/repo/...">
+                <button class="action-btn paste-btn" onclick="pasteFromClipboard()" title="从剪贴板粘贴">
+                    <span>📋</span>
+                    <span class="lang-content active" data-lang="zh">粘贴</span>
+                    <span class="lang-content" data-lang="en">Paste</span>
+                </button>
+            </div>
+            
+            <!-- 错误提示 -->
+            <div class="error-msg" id="error-msg">
+                <span class="lang-content active" data-lang="zh">⚠️ 请输入有效的 GitHub 链接</span>
+                <span class="lang-content" data-lang="en">⚠️ Please enter a valid GitHub URL</span>
+            </div>
+            
+            <!-- 结果预览 -->
+            <div class="result-area" id="result-area" style="display: none;">
+                <div class="result-label">
+                    <span class="lang-content active" data-lang="zh">🚀 加速链接</span>
+                    <span class="lang-content" data-lang="en">🚀 Accelerated URL</span>
+                </div>
+                <div class="result-url" id="result-url"></div>
+            </div>
+            
+            <!-- 操作按钮组 -->
+            <div class="button-group" id="button-group" style="display: none;">
+                <button class="action-btn copy-btn" onclick="copyUrl()">
+                    <span>📋</span>
+                    <span class="lang-content active" data-lang="zh">复制链接</span>
+                    <span class="lang-content" data-lang="en">Copy URL</span>
+                </button>
+                <button class="action-btn download-btn" onclick="downloadFile()">
+                    <span>📥</span>
+                    <span class="lang-content active" data-lang="zh">直接下载</span>
+                    <span class="lang-content" data-lang="en">Download</span>
+                </button>
+                <button class="action-btn copy-btn" onclick="copyWget()">
+                    <span>💻</span> wget
+                </button>
+                <button class="action-btn copy-btn" onclick="copyCurl()">
+                    <span>💻</span> curl
+                </button>
+            </div>
+        </div>
+        
         <div class="card">
             <h2><span>📖</span>
                 <span class="lang-content active" data-lang="zh">项目介绍</span>
@@ -343,6 +557,10 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
             </a>
         </div>
     </div>
+    
+    <!-- Toast 提示 -->
+    <div class="toast" id="toast"></div>
+    
     <footer>
         <p class="lang-content active" data-lang="zh">
             由 <a href="https://workers.cloudflare.com/" target="_blank" rel="noopener">Cloudflare Workers</a> 强力驱动 | 
@@ -419,6 +637,158 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
         // 初始化应用设置
         applyTheme(currentTheme);
         applyLanguage(currentLang);
+        
+        // ==================== 转换器功能 ====================
+        
+        // 当前代理域名
+        const PROXY_DOMAIN = '${domain}';
+        
+        // 支持的 GitHub 域名
+        const SUPPORTED_HOSTS = [
+            'github.com', 'raw.githubusercontent.com', 'gist.github.com',
+            'gist.githubusercontent.com', 'github.githubassets.com', 
+            'codeload.github.com', 'api.github.com'
+        ];
+        
+        // 输入框监听
+        document.getElementById('github-url').addEventListener('input', handleInput);
+        document.getElementById('github-url').addEventListener('paste', function() {
+            setTimeout(handleInput, 0);
+        });
+        
+        // 处理输入
+        function handleInput() {
+            const input = document.getElementById('github-url').value.trim();
+            const resultArea = document.getElementById('result-area');
+            const buttonGroup = document.getElementById('button-group');
+            const errorMsg = document.getElementById('error-msg');
+            
+            if (!input) {
+                resultArea.style.display = 'none';
+                buttonGroup.style.display = 'none';
+                errorMsg.style.display = 'none';
+                return;
+            }
+            
+            const proxyUrl = convertToProxyUrl(input);
+            if (proxyUrl) {
+                document.getElementById('result-url').textContent = proxyUrl;
+                resultArea.style.display = 'block';
+                buttonGroup.style.display = 'flex';
+                errorMsg.style.display = 'none';
+            } else {
+                resultArea.style.display = 'none';
+                buttonGroup.style.display = 'none';
+                errorMsg.style.display = 'block';
+            }
+        }
+        
+        // 转换为代理 URL
+        function convertToProxyUrl(url) {
+            try {
+                // 清理 URL
+                url = url.trim();
+                
+                // 尝试解析为 URL
+                if (url.startsWith('https://') || url.startsWith('http://')) {
+                    const parsed = new URL(url);
+                    if (SUPPORTED_HOSTS.includes(parsed.hostname)) {
+                        // 返回简化格式
+                        return PROXY_DOMAIN + parsed.pathname + parsed.search + parsed.hash;
+                    }
+                }
+                return null;
+            } catch (e) {
+                return null;
+            }
+        }
+        
+        // 从剪贴板粘贴
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('github-url').value = text;
+                handleInput();
+            } catch (e) {
+                showToast(currentLang === 'zh' ? '无法访问剪贴板，请手动粘贴' : 'Cannot access clipboard, please paste manually', true);
+            }
+        }
+        
+        // 复制加速链接
+        function copyUrl() {
+            const url = document.getElementById('result-url').textContent;
+            copyToClipboard(url, currentLang === 'zh' ? '✅ 链接已复制' : '✅ URL copied');
+        }
+        
+        // 复制 wget 命令
+        function copyWget() {
+            const url = document.getElementById('result-url').textContent;
+            copyToClipboard('wget ' + url, currentLang === 'zh' ? '✅ wget 命令已复制' : '✅ wget command copied');
+        }
+        
+        // 复制 curl 命令
+        function copyCurl() {
+            const url = document.getElementById('result-url').textContent;
+            copyToClipboard('curl -LO ' + url, currentLang === 'zh' ? '✅ curl 命令已复制' : '✅ curl command copied');
+        }
+        
+        // 直接下载
+        function downloadFile() {
+            const url = document.getElementById('result-url').textContent;
+            if (url) {
+                window.open(url, '_blank');
+            }
+        }
+        
+        // 复制到剪贴板
+        async function copyToClipboard(text, message) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast(message);
+            } catch (e) {
+                // 降级方案
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast(message);
+                } catch (err) {
+                    showToast(currentLang === 'zh' ? '复制失败' : 'Copy failed', true);
+                }
+                document.body.removeChild(textarea);
+            }
+        }
+        
+        // 显示 Toast 提示
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+        
+        // 更新 placeholder（语言切换时调用）
+        function updatePlaceholders() {
+            const input = document.getElementById('github-url');
+            if (input) {
+                input.placeholder = input.getAttribute('data-placeholder-' + currentLang);
+            }
+        }
+        
+        // 扩展语言切换函数
+        const originalApplyLanguage = applyLanguage;
+        applyLanguage = function(lang) {
+            originalApplyLanguage(lang);
+            updatePlaceholders();
+        };
+        
+        // 初始化 placeholder
+        updatePlaceholders();
     </script>
 </body>
 </html>`;
