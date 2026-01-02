@@ -535,6 +535,15 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
                 <div class="format-desc lang-content" data-lang="en">Code snippets from gist.githubusercontent.com</div>
                 <div class="code-block">${domain}/gist.githubusercontent.com/user/gist-id/raw/file.txt</div>
             </div>
+            <div class="format-item">
+                <div class="format-title">
+                    <span class="lang-content active" data-lang="zh">🔗 完整 URL 格式</span>
+                    <span class="lang-content" data-lang="en">🔗 Full URL Format</span>
+                </div>
+                <div class="format-desc lang-content active" data-lang="zh">直接在代理域名后粘贴完整 GitHub 链接，最直观</div>
+                <div class="format-desc lang-content" data-lang="en">Paste the full GitHub URL after the proxy domain, most intuitive</div>
+                <div class="code-block">${domain}/https://github.com/user/repo/releases/download/v1.0/file.zip</div>
+            </div>
             <h3 class="lang-content active" data-lang="zh">支持的域名</h3>
             <h3 class="lang-content" data-lang="en">Supported Domains</h3>
             <ul style="color: var(--text-secondary); margin-left: 2rem; margin-top: 0.5rem;">
