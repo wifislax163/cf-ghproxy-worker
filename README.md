@@ -202,10 +202,8 @@ https://your-worker.workers.dev/https://github.com/torvalds/linux/archive/refs/t
 
 | Format | Description | Example |
 |:------:|:------------|:--------|
-| **📦 Release Files** | Download from github.com | `proxy.dev/github.com/user/repo/releases/download/v1.0/file.zip` |
-| **📄 Raw Files** | Get raw files | `proxy.dev/raw.githubusercontent.com/user/repo/main/file` |
-| **📋 Gist Snippets** | Get gist content | `proxy.dev/gist.githubusercontent.com/user/gist-id/raw/file` |
-| **🔗 Full URL** | Paste full GitHub URL | `proxy.dev/https://github.com/user/repo/...` |
+| **📦 Domain Path** | Remove https://, keep domain and path | `proxy.dev/github.com/user/repo/...` |
+| **🔗 Full URL** | Paste full GitHub URL directly | `proxy.dev/https://github.com/user/repo/...` |
 
 <br/>
 

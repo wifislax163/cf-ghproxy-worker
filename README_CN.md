@@ -202,9 +202,7 @@ https://your-worker.workers.dev/https://github.com/torvalds/linux/archive/refs/t
 
 | 格式 | 说明 | 示例 |
 |:----:|:-----|:-----|
-| **📦 Release 文件** | 下载 github.com 文件 | `proxy.dev/github.com/user/repo/releases/download/v1.0/file.zip` |
-| **📄 Raw 文件** | 获取原始文件 | `proxy.dev/raw.githubusercontent.com/user/repo/main/file` |
-| **📋 Gist 代码片段** | 获取 Gist 内容 | `proxy.dev/gist.githubusercontent.com/user/gist-id/raw/file` |
+| **📦 域名路径格式** | 去掉 https://，保留域名和路径 | `proxy.dev/github.com/user/repo/...` |
 | **🔗 完整 URL** | 直接粘贴完整 GitHub 链接 | `proxy.dev/https://github.com/user/repo/...` |
 
 <br/>

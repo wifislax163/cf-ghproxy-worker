@@ -510,30 +510,12 @@ function getHomePage(domain = 'https://your-worker.workers.dev') {
             <p class="lang-content" data-lang="en">Replace the GitHub domain with the proxy domain:</p>
             <div class="format-item">
                 <div class="format-title">
-                    <span class="lang-content active" data-lang="zh">📦 下载 Release 文件</span>
-                    <span class="lang-content" data-lang="en">📦 Download Release Files</span>
+                    <span class="lang-content active" data-lang="zh">📦 域名路径格式</span>
+                    <span class="lang-content" data-lang="en">📦 Domain Path Format</span>
                 </div>
-                <div class="format-desc lang-content active" data-lang="zh">github.com 仓库文件下载</div>
-                <div class="format-desc lang-content" data-lang="en">Download files from github.com</div>
+                <div class="format-desc lang-content active" data-lang="zh">将 GitHub 链接中的 https:// 去掉，保留域名和路径</div>
+                <div class="format-desc lang-content" data-lang="en">Remove https:// from GitHub URL, keep domain and path</div>
                 <div class="code-block">${domain}/github.com/user/repo/releases/download/v1.0/file.zip</div>
-            </div>
-            <div class="format-item">
-                <div class="format-title">
-                    <span class="lang-content active" data-lang="zh">📄 获取 Raw 文件</span>
-                    <span class="lang-content" data-lang="en">📄 Get Raw Files</span>
-                </div>
-                <div class="format-desc lang-content active" data-lang="zh">raw.githubusercontent.com 原始文件</div>
-                <div class="format-desc lang-content" data-lang="en">Raw files from raw.githubusercontent.com</div>
-                <div class="code-block">${domain}/raw.githubusercontent.com/user/repo/main/file.txt</div>
-            </div>
-            <div class="format-item">
-                <div class="format-title">
-                    <span class="lang-content active" data-lang="zh">📋 Gist 代码片段</span>
-                    <span class="lang-content" data-lang="en">📋 Gist Snippets</span>
-                </div>
-                <div class="format-desc lang-content active" data-lang="zh">gist.githubusercontent.com 代码片段</div>
-                <div class="format-desc lang-content" data-lang="en">Code snippets from gist.githubusercontent.com</div>
-                <div class="code-block">${domain}/gist.githubusercontent.com/user/gist-id/raw/file.txt</div>
             </div>
             <div class="format-item">
                 <div class="format-title">
