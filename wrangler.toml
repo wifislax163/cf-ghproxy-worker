@@ -1,4 +1,4 @@
-name = "github-proxy"
+name = "cf-ghproxy-worker"
 main = "worker.js"
 compatibility_date = "2023-12-01"
 
